@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -39,7 +40,7 @@
         p {
             color: #2e3440;
             margin-top: 20px;
-            font-size: 100px;
+            font-size: 24px;
             line-height: 1.5;
         }
         button {
@@ -70,12 +71,35 @@
             display: block;
             margin-bottom: 10px;
         }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+        .shake-element {
+            animation: shake 0.5s ease;
+        }
+        .popup {
+            display: none;
+            position: absolute;
+            background-color: none;
+            color: rgb(132, 21, 21);
+            padding: 10px;
+            border-radius: 5px;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 999;
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Hi Alex Hsu Yu Sheng !!!!</h1>
     </header>
+    <!-- Add the popup element -->
+    <div id="popup" class="popup"></div>
     <form id="valentineForm" onsubmit="return handleSubmit()">
         <fieldset>
             <legend>Will you be my Valentine? - Bridge</legend>
@@ -97,8 +121,19 @@
             if (valentineChoice && valentineChoice.value === 'yes') {
                 window.location.href = 'yes_page.html'; // Redirect to another page if 'Yes' is selected
                 return false; // Prevent form submission
+            } else {
+                // Add a class to the form to trigger the animation
+                document.getElementById('valentineForm').classList.add('shake-element');
+                // Display the popup message
+                document.getElementById('popup').innerText = "Not a valid answer, babe";
+                document.getElementById('popup').style.display = 'block';
+                // Hide the popup message after 2 seconds
+                setTimeout(function() {
+                    document.getElementById('popup').style.display = 'none';
+                }, 2000);
+                // Prevent form submission
+                return false;
             }
-            return true; // Allow form submission if 'No' is selected
         }
     </script>
 </body>
